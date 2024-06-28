@@ -1,5 +1,6 @@
 import { parse } from "node-html-parser";
 import fs from "fs";
+import path from "path";
 
 export type Content = {
   title: string;
@@ -75,7 +76,10 @@ export function parseHTMLFileText(html: string): Content {
     return { mediaType, mediaSource, description };
   });
 
-  content.styles = fs.readFileSync("styles/result-html.css", "utf8");
+  content.styles = fs.readFileSync(
+    path.resolve("./public/styles/result-html.css"),
+    "utf8",
+  );
 
   return content;
 }
