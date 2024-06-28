@@ -24,6 +24,10 @@ div#root-container {
   background: #2c2f34;
 
   width: 60%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 }
 
 div.image-container {
@@ -51,4 +55,8 @@ img {
 p {
   margin: 0;
   padding: 0;
+
+  @media (max-width: 768px) {
+    line-height: 1.5;
+  }
 }
