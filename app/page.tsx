@@ -1,5 +1,7 @@
 "use client";
 
+import { buildResultHTMLFromContent } from "@/lib/html-builder";
+
 import { useState } from "react";
 
 export default function Home() {
@@ -8,7 +10,17 @@ export default function Home() {
   async function handleSubmit() {
     const response = await fetch(`/api/fetch-html?url=${url}`);
     const data = await response.json();
-    console.log(data);
+
+    const blob = buildResultHTMLFromContent(data);
+    const blobUrl = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.style.display = "none";
+    link.href = blobUrl;
+    link.download = `${data.title}.html`;
+    document.body.appendChild(link);
+    link.click();
+    URL.revokeObjectURL(blobUrl);
+    link.remove();
   }
   return (
     <main className="w-full h-full flex flex-col gap-4 items-center justify-center bg-zinc-800">
@@ -27,7 +39,6 @@ export default function Home() {
       >
         Submit
       </button>
-      <iframe className="hidden"></iframe>
     </main>
   );
 }

@@ -1,4 +1,5 @@
 import { parse } from "node-html-parser";
+import fs from "fs";
 
 export type Content = {
   title: string;
@@ -7,6 +8,7 @@ export type Content = {
     mediaSource: string;
     description: string;
   }[];
+  styles?: string;
 };
 
 export async function fetchHTMLFile(url: string): Promise<string> {
@@ -72,6 +74,8 @@ export function parseHTMLFileText(html: string): Content {
 
     return { mediaType, mediaSource, description };
   });
+
+  content.styles = fs.readFileSync("styles/result-html.css", "utf8");
 
   return content;
 }
